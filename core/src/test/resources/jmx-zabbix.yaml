@@ -1,0 +1,34 @@
+
+serverName: toto
+pushIntervalSecond: 1
+inMemoryMaxQueueSize: 5000
+
+jmx:
+  url: service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi
+  username:
+  password:
+  valuesCaptured:
+    com.yammer.metrics.reporting.JmxReporter$Gauge:
+      [Value]
+    com.yammer.metrics.reporting.JmxReporter$Counter:
+      [Count]
+    com.yammer.metrics.reporting.JmxReporter$Meter:
+      [Count, MeanRate, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate]
+    com.yammer.metrics.reporting.JmxReporter$Timer:
+      [Count, MeanRate, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, 50thPercentile, 75thPercentile, 95thPercentile, 98thPercentile, 99thPercentile, 999thPercentile]
+
+  metrics:
+    cassandra.messages.dropped.binary: org.apache.cassandra.metrics:type=DroppedMessage,scope=BINARY,name=Dropped
+    cassandra.messages.dropped.counter_mutation: org.apache.cassandra.metrics:type=DroppedMessage,scope=COUNTER_MUTATION,name=Dropped
+    cassandra.messages.dropped.mutation: org.apache.cassandra.metrics:type=DroppedMessage,scope=MUTATION,name=Dropped
+    cassandra.messages.dropped.paged_range: org.apache.cassandra.metrics:type=DroppedMessage,scope=PAGED_RANGE,name=Dropped
+    cassandra.messages.dropped.range_slice: org.apache.cassandra.metrics:type=DroppedMessage,scope=RANGE_SLICE,name=Dropped
+    cassandra.messages.dropped.read: org.apache.cassandra.metrics:type=DroppedMessage,scope=READ,name=Dropped
+    cassandra.messages.dropped.read_repair: org.apache.cassandra.metrics:type=DroppedMessage,scope=READ_REPAIR,name=Dropped
+    cassandra.messages.dropped.request_response: org.apache.cassandra.metrics:type=DroppedMessage,scope=REQUEST_RESPONSE,name=Dropped
+    cassandra.messages.dropped.trace: org.apache.cassandra.metrics:type=DroppedMessage,scope=_TRACE,name=Dropped
+
+zabbix:
+  host: localhost
+  port: 10051
+  timeoutSecond: 1

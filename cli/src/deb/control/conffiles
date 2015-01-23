@@ -1,0 +1,3 @@
+/etc/default/jmx-zabbix
+/etc/jmx-zabbix/jmx-zabbix.yaml
+/etc/jmx-zabbix/logback.xml

@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.norad.jmxzabbix</groupId>
+    <artifactId>jmxzabbix</artifactId>
+    <packaging>pom</packaging>
+    <name>Jmx Zabbix</name>
+    <description>Jmx to Zabbix</description>
+    <version>0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>fr.norad.parent</groupId>
+        <artifactId>parent-java</artifactId>
+        <version>1.19</version>
+    </parent>
+
+    <modules>
+        <module>cli</module>
+        <module>core</module>
+    </modules>
+
+    <properties>
+        <cxf.version>2.7.11</cxf.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>fr.norad.jmxzabbix</groupId>
+                <artifactId>jmx-zabbix-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project> 
