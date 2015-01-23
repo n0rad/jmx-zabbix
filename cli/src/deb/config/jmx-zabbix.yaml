@@ -31,4 +31,4 @@ jmx:
 zabbix:
   host: localhost
   port: 10051
-  timeoutSecond: 1
+  timeoutSecond: 30
