@@ -51,6 +51,7 @@
     </dependencies>
 
     <build>
+        <finalName>jmx-zabbix</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
