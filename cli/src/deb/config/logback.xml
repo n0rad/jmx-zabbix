@@ -6,17 +6,15 @@
 
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${API_MESSAGES_HOME}/jmx-zabbix.log</file>
+        <file>/var/log/jmx-zabbix/jmx-zabbix.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern><![CDATA[${API_MESSAGES_HOME}/logs/apiMessages.%d{yyyy-MM-dd}.log]]></fileNamePattern>
+            <fileNamePattern><![CDATA[/var/log/jmx-zabbix/jmx-zabbix.%d{yyyy-MM-dd}.log]]></fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern><![CDATA[%d{yyyy-MM-dd HH:mm:ss.SSS} [%-10.10thread] %-5level %-45.45(%41C{41}:%L) - %msg%n%wex]]></pattern>
         </encoder>
     </appender>
-
-    <logger name="fr.norad" level="INFO"/>
 
     <root>
         <level value="WARN"/>
