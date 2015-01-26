@@ -5,7 +5,7 @@ USER=www-data
 GROUP=www-data
 
 NAME="jmx-zabbix"
-DESC="Load jmx metrics periodically and push to zabbix in a row"
+DESC="JMX to Zabbix"
 
 LIB_DIR="/usr/share/$NAME/lib"
 CONFIG_DIR="/etc/$NAME"

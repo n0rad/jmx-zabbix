@@ -27,7 +27,7 @@ test -x $DAEMON || exit 0
 RETVAL=0
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 ROTATE_SUFFIX=
-PID_FILE=/var/run/$NAME/pid
+PID_FILE=/var/run/$NAME.pid
 
 . /lib/lsb/init-functions
 . /lib/init/vars.sh
