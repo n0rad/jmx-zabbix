@@ -57,4 +57,23 @@ public class JmxMetricsTest {
         assertThat(metrics.getData().get(0).getHost()).isEqualTo("superServer");
     }
 
+    @Test
+    public void should_support_embedded_object() throws Exception {
+        new CassandraEmbedded().start();
+        JmxConfig config = new JmxConfig();
+        config.setUrl(jmxServer());
+        config.setPassword("");
+        config.setUsername("");
+        config.getValuesCaptured().put("sun.management.MemoryImpl", asList("HeapMemoryUsage.max", "NonHeapMemoryUsage.used"));
+        config.getMetrics().put("mem", "java.lang:type=Memory");
+
+        JmxMetrics jmxMetrics = new JmxMetrics(config, "superServer");
+        ZabbixRequest metrics = jmxMetrics.getMetrics();
+
+        assertThat(metrics.getData()).hasSize(2);
+        assertThat(metrics.getData().get(0).getKey()).isEqualTo("mem[HeapMemoryUsage.max]");
+        assertThat((long) metrics.getData().get(0).getValue()).isGreaterThan(10000);
+        assertThat(metrics.getData().get(0).getHost()).isEqualTo("superServer");
+    }
+
 }

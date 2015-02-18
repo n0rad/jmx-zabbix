@@ -17,7 +17,11 @@ jmx:
     com.yammer.metrics.reporting.JmxReporter$Timer:
       [Count, MeanRate, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, 50thPercentile, 75thPercentile, 95thPercentile, 98thPercentile, 99thPercentile, 999thPercentile]
 
+    sun.management.MemoryImpl:
+      [NonHeapMemoryUsage.used, HeapMemoryUsage.used, HeapMemoryUsage.max]
+
   metrics:
+    mem: java.lang:type=Memory
     cassandra.messages.dropped.binary: org.apache.cassandra.metrics:type=DroppedMessage,scope=BINARY,name=Dropped
     cassandra.messages.dropped.counter_mutation: org.apache.cassandra.metrics:type=DroppedMessage,scope=COUNTER_MUTATION,name=Dropped
     cassandra.messages.dropped.mutation: org.apache.cassandra.metrics:type=DroppedMessage,scope=MUTATION,name=Dropped

@@ -16,6 +16,7 @@
  */
 package fr.norad.jmxzabbix.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,23 @@ public class Config {
 
         private Map<String, List<String>> valuesCaptured = new HashMap<>();
         private Map<String, String> metrics = new HashMap<>();
+
+        private Map<String, List<String[]>> preparedValuesCaptured;
+
+        public Map<String, List<String[]>> preparedValuesCaptured() {
+            if (preparedValuesCaptured == null) {
+                preparedValuesCaptured = new HashMap<>();
+                for (String key : valuesCaptured.keySet()) {
+                    ArrayList<String[]> strings = new ArrayList<>();
+                    for (String name : valuesCaptured.get(key)) {
+                        strings.add(name.split("\\."));
+                    }
+                    preparedValuesCaptured.put(key, strings);
+                }
+            }
+            return preparedValuesCaptured;
+        }
+
     }
 
     @Data
