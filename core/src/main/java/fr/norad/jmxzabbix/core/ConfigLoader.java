@@ -23,13 +23,13 @@ import org.yaml.snakeyaml.Yaml;
 
 public class ConfigLoader {
 
-    public static Config loadConfig(File config) throws IOException {
+    public static JmxZabbixConfig loadConfig(File config) throws IOException {
         if (!config.isFile() || !config.canRead()) {
             throw new IllegalStateException("Cannot read configuration file : " + config);
         }
         Yaml yaml = new Yaml();
         try (FileInputStream input = new FileInputStream(config)) {
-            return yaml.loadAs(input, Config.class);
+            return yaml.loadAs(input, JmxZabbixConfig.class);
         }
     }
 

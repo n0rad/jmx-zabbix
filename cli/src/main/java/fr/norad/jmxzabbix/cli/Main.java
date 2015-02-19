@@ -17,7 +17,7 @@
 package fr.norad.jmxzabbix.cli;
 
 import java.io.File;
-import fr.norad.jmxzabbix.core.Config;
+import fr.norad.jmxzabbix.core.JmxZabbixConfig;
 import fr.norad.jmxzabbix.core.ConfigLoader;
 import fr.norad.jmxzabbix.core.JmxToZabbixDaemon;
 
@@ -28,7 +28,7 @@ public class Main {
             if (args.length != 1) {
                 throw new IllegalArgumentException("Usage: jmx-zabbix config.yaml");
             }
-            Config config = ConfigLoader.loadConfig(new File(args[0]));
+            JmxZabbixConfig config = ConfigLoader.loadConfig(new File(args[0]));
             new Thread(new JmxToZabbixDaemon(config)).start();
         } catch (Exception e) {
               e.printStackTrace(System.err);

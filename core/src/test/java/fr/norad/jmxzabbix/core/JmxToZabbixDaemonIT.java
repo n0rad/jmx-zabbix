@@ -37,7 +37,7 @@ public class JmxToZabbixDaemonIT {
         // start cassandra
         new CassandraEmbedded().start();
         // config
-        Config config = ConfigLoader.loadConfig(new File(JmxToZabbixDaemonIT.class.getResource("/jmx-zabbix.yaml").getPath()));
+        JmxZabbixConfig config = ConfigLoader.loadConfig(new File(JmxToZabbixDaemonIT.class.getResource("/jmx-zabbix.yaml").getPath()));
         config.getJmx().setUrl(jmxUrl);
 
         daemon = new JmxToZabbixDaemon(config);

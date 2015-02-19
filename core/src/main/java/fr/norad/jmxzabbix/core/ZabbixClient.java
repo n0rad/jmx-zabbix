@@ -23,10 +23,10 @@ import java.net.ConnectException;
 import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import fr.norad.jmxzabbix.core.Config.ZabbixConfig;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.EvictingQueue;
+import fr.norad.jmxzabbix.core.JmxZabbixConfig.ZabbixConfig;
 
 public class ZabbixClient {
 

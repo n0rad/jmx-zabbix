@@ -17,16 +17,17 @@
 package fr.norad.jmxzabbix.core;
 
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import com.google.common.collect.EvictingQueue;
 import lombok.Data;
 
 @Data
 public class JmxToZabbixDaemon implements Runnable {
 
-    private final Config config;
+    private final JmxZabbixConfig config;
     private boolean interruptFlag = false;
 
-    public JmxToZabbixDaemon(Config config) {
+    public JmxToZabbixDaemon(JmxZabbixConfig config) {
         this.config = config;
     }
 
@@ -36,7 +37,13 @@ public class JmxToZabbixDaemon implements Runnable {
         while (!interruptFlag) {
             try {
                 Thread.sleep(config.getPushIntervalSecond() * 1000);
-                queue.add(new JmxMetrics(config.getJmx(), config.getServerName()).getMetrics());
+                if (isNullOrEmpty(config.getZabbix().getHost())) {
+                    continue;
+                }
+                ZabbixRequest metrics = new JmxMetrics(config.getJmx(), config.getServerName()).getMetrics();
+                if (metrics != null) {
+                    queue.add(metrics);
+                }
                 new ZabbixClient(config.getZabbix()).send(queue);
             } catch (Exception e) {
                 e.printStackTrace(System.err);

@@ -30,7 +30,7 @@ public class CassandraDevTest {
 //        new CassandraEmbedded().start();
 
         // config
-        Config config = ConfigLoader.loadConfig(new File(JmxToZabbixDaemonIT.class.getResource("/CassandraDev.yaml").getPath()));
+        JmxZabbixConfig config = ConfigLoader.loadConfig(new File(JmxToZabbixDaemonIT.class.getResource("/CassandraDev.yaml").getPath()));
 
         JmxToZabbixDaemon jmxToZabbixDaemon = new JmxToZabbixDaemon(config);
         jmxToZabbixDaemon.run();

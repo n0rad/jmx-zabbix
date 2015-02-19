@@ -23,10 +23,11 @@ import java.util.Map;
 import lombok.Data;
 
 @Data
-public class Config {
+public class JmxZabbixConfig {
 
     private JmxConfig jmx = new JmxConfig();
     private ZabbixConfig zabbix = new ZabbixConfig();
+
     private String serverName;
     private long pushIntervalSecond = 60;
     private Integer inMemoryMaxQueueSize = 5000;
@@ -35,9 +36,9 @@ public class Config {
 
     @Data
     public static class JmxConfig {
-        private String url = "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi";
-        private String username = "cassandra";
-        private String password = "cassandra";
+        private String url;
+        private String username;
+        private String password;
 
         private Map<String, List<String>> valuesCaptured = new HashMap<>();
         private Map<String, String> metrics = new HashMap<>();

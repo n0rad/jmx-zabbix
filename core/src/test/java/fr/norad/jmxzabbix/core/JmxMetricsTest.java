@@ -24,7 +24,7 @@ import javax.management.remote.JMXConnectorServer;
 import javax.management.remote.JMXConnectorServerFactory;
 import javax.management.remote.JMXServiceURL;
 import org.junit.Test;
-import fr.norad.jmxzabbix.core.Config.JmxConfig;
+import fr.norad.jmxzabbix.core.JmxZabbixConfig.JmxConfig;
 import fr.norad.jmxzabbix.core.utils.CassandraEmbeddedUtils.CassandraEmbedded;
 
 public class JmxMetricsTest {
