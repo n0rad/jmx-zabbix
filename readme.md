@@ -15,6 +15,14 @@ Service that load jmx metrics periodically and push to zabbix in one shot
 
 see configuration file example cli/src/dev/conf/jmx-zabbix.yaml
 
+# Build
+
+You need java and maven
+
+``
+$ mvn clean verify
+``
+
 # USAGE:
 
 in cli :
