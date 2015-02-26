@@ -13,7 +13,7 @@ Service that load jmx metrics periodically and push to zabbix in one shot
 
 # ATTRIBUTES:
 
-see configuration file example cli/src/dev/conf/jmx-zabbix.yaml
+see configuration file example cli/src/deb/config/jmx-zabbix.yaml
 
 # Build
 
