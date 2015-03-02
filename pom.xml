@@ -15,6 +15,13 @@
         <version>1.19</version>
     </parent>
 
+    <scm>
+        <connection>scm:git:git://github.com/n0rad/jmx-zabbix.git</connection>
+        <developerConnection>scm:git:git@github.com:n0rad/jmx-zabbix.git</developerConnection>
+        <url>https://github.com/n0rad/jmx-zabbix</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <modules>
         <module>cli</module>
         <module>core</module>
