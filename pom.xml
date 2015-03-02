@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.norad.jmxzabbix</groupId>
@@ -7,7 +6,7 @@
     <packaging>pom</packaging>
     <name>Jmx Zabbix</name>
     <description>Jmx to Zabbix</description>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <parent>
         <groupId>fr.norad.parent</groupId>
@@ -19,7 +18,7 @@
         <connection>scm:git:git://github.com/n0rad/jmx-zabbix.git</connection>
         <developerConnection>scm:git:git@github.com:n0rad/jmx-zabbix.git</developerConnection>
         <url>https://github.com/n0rad/jmx-zabbix</url>
-        <tag>HEAD</tag>
+        <tag>jmxzabbix-0.1</tag>
     </scm>
 
     <modules>
