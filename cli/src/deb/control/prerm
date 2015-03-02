@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-
-if [ -x "/etc/init.d/jmx-zabbix" ]; then
-	invoke-rc.d jmx-zabbix stop || exit $?
-fi

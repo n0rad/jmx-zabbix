@@ -71,66 +71,6 @@
                     </excludeGroupIds>
                 </configuration>
             </plugin>
-
-            <!-- Debian Package -->
-            <plugin>
-                <artifactId>jdeb</artifactId>
-                <groupId>org.vafer</groupId>
-                <version>1.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jdeb</goal>
-                        </goals>
-                        <configuration>
-                            <dataSet>
-                                <data>
-                                    <src>${basedir}/src/deb/init.d</src>
-                                    <type>directory</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/etc/init.d</prefix>
-                                        <user>root</user>
-                                        <group>root</group>
-                                        <filemode>755</filemode>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${basedir}/src/deb/default</src>
-                                    <type>directory</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/etc/default</prefix>
-                                        <user>root</user>
-                                        <group>root</group>
-                                        <filemode>644</filemode>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${basedir}/src/deb/config</src>
-                                    <type>directory</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/etc/jmx-zabbix</prefix>
-                                        <user>root</user>
-                                        <group>root</group>
-                                        <filemode>644</filemode>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${project.build.directory}/${project.build.finalName}.jar</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/share/${project.build.finalName}/lib</prefix>
-                                    </mapper>
-                                </data>
-                            </dataSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
