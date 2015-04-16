@@ -24,7 +24,12 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.NonTypedScalarSerializerBase;
 import com.google.common.collect.EvictingQueue;
 import fr.norad.jmxzabbix.core.JmxZabbixConfig.ZabbixConfig;
 
@@ -37,6 +42,18 @@ public class ZabbixClient {
 
     public ZabbixClient(ZabbixConfig config) {
         this.config = config;
+
+        // zabbix does not understand boolean with value true without quotes which is default of jackson
+        SimpleModule module = new SimpleModule("BooleanAsString", new Version(1, 0, 0, null, null, null));
+        module.addSerializer(new NonTypedScalarSerializerBase<Boolean>(Boolean.class) {
+            @Override
+            public void serialize(Boolean value, JsonGenerator jgen, SerializerProvider provider)
+                    throws IOException {
+                jgen.writeString(value.toString());
+            }
+        });
+
+        mapper.registerModule(module);
     }
 
     public void send(EvictingQueue<ZabbixRequest> dataQueue) throws IOException {

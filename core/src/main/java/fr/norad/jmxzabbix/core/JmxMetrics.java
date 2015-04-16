@@ -84,7 +84,7 @@ public class JmxMetrics {
                             config.preparedValuesCaptured().get(info.getClassName()), zabbixPrefix, jmxObject);
                 }
             } catch (Exception e) {
-                LOG.warn("cannot read metrics for prefix : " + zabbixPrefix, e);
+//                LOG.warn("cannot read metrics for prefix : " + zabbixPrefix, e);
             }
         }
         return request;
