@@ -33,8 +33,7 @@ $ java -jar jmx-zabbix.jar config.yaml
 
 Or you can include the core library directly in your application : 
 
-``
-
+```
 import java.io.File;
 import java.io.FileInputStream;
 import org.yaml.snakeyaml.Yaml;
@@ -57,5 +56,5 @@ public class Main {
     }
 
 }
-``
+```
 
