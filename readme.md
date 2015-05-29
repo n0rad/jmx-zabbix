@@ -31,4 +31,31 @@ in cli :
 $ java -jar jmx-zabbix.jar config.yaml
 ``
 
-Or you can include the core library directly in your application
+Or you can include the core library directly in your application : 
+
+``
+
+import java.io.File;
+import java.io.FileInputStream;
+import org.yaml.snakeyaml.Yaml;
+import fr.norad.jmxzabbix.core.JmxToZabbixDaemon;
+import fr.norad.jmxzabbix.core.JmxZabbixConfig;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        File configFile = new File("/my/configuration/file.yaml");
+        Yaml yaml = new Yaml();
+        try (FileInputStream input = new FileInputStream(configFile)) {
+            JmxZabbixConfig config = yaml.loadAs(input, JmxZabbixConfig.class);
+            JmxToZabbixDaemon jmxToZabbixDaemon = new JmxToZabbixDaemon(config);
+            Thread thread = new Thread(jmxToZabbixDaemon);
+            thread.setName("jmxzabbix");
+            thread.start();
+        }
+
+    }
+
+}
+``
+
