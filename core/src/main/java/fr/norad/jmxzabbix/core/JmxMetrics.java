@@ -17,9 +17,12 @@
 package fr.norad.jmxzabbix.core;
 
 
+import static fr.norad.jmxzabbix.core.JmxZabbix.JMXZABBIX_CHECK_JMX_CONNECTION_ERROR;
+import static fr.norad.jmxzabbix.core.JmxZabbix.JMXZABBIX_CHECK_KEY;
+import static fr.norad.jmxzabbix.core.JmxZabbix.JMXZABBIX_CHECK_SUCCESS;
+import static fr.norad.jmxzabbix.core.JmxZabbix.getJmxZabbixVersion;
 import static java.lang.management.ManagementFactory.getPlatformMBeanServer;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,15 +69,17 @@ public class JmxMetrics {
             try (JMXConnector jmxc = JMXConnectorFactory.connect(jmxUrl, env)) {
                 MBeanServerConnection conn = jmxc.getMBeanServerConnection();
                 return getMetrics(new MbeanServer(conn));
-            } catch (ConnectException e) {
+            } catch (IOException e) {
                 LOG.warn("Cannot connect to jmx server to get metrics : " + config.getUrl(), e);
+                ZabbixRequest zabbixRequest = new ZabbixRequest(getJmxZabbixVersion(), serverName);
+                zabbixRequest.getData().add(new ZabbixItem<>(JMXZABBIX_CHECK_KEY, JMXZABBIX_CHECK_JMX_CONNECTION_ERROR, serverName));
+                return zabbixRequest;
             }
         }
-        return null;
     }
 
     private ZabbixRequest getMetrics(MbeanServer server) {
-        ZabbixRequest request = new ZabbixRequest();
+        ZabbixRequest request = new ZabbixRequest(getJmxZabbixVersion(), serverName);
         for (String zabbixPrefix : config.getMetrics().keySet()) {
             try {
                 ObjectName jmxObject = new ObjectName(config.getMetrics().get(zabbixPrefix));
@@ -87,6 +92,7 @@ public class JmxMetrics {
 //                LOG.warn("cannot read metrics for prefix : " + zabbixPrefix, e);
             }
         }
+        request.getData().add(new ZabbixItem<>(JMXZABBIX_CHECK_KEY, JMXZABBIX_CHECK_SUCCESS, serverName));
         return request;
     }
 

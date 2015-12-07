@@ -40,10 +40,7 @@ public class JmxToZabbixDaemon implements Runnable {
                 if (isNullOrEmpty(config.getZabbix().getHost())) {
                     continue;
                 }
-                ZabbixRequest metrics = new JmxMetrics(config.getJmx(), config.getServerName()).getMetrics();
-                if (metrics != null) {
-                    queue.add(metrics);
-                }
+                queue.add(new JmxMetrics(config.getJmx(), config.getServerName()).getMetrics());
                 new ZabbixClient(config.getZabbix()).send(queue);
             } catch (Exception e) {
                 e.printStackTrace(System.err);

@@ -39,6 +39,40 @@ public class JmxMetricsTest {
     }
 
     @Test
+    public void should_return_at_least_version_and_status() throws Exception {
+        new CassandraEmbedded().start();
+        JmxConfig config = new JmxConfig();
+        config.setUrl(jmxServer());
+        config.setPassword("");
+        config.setUsername("");
+
+        ZabbixRequest metrics = new JmxMetrics(config, "superServer").getMetrics();
+
+        assertThat(metrics.getData()).hasSize(2);
+        assertThat(metrics.getData().get(0).getKey()).isEqualTo("jmxzabbix.version");
+        assertThat(metrics.getData().get(0).getValue()).isEqualTo("UNKNOWN");
+        assertThat(metrics.getData().get(0).getHost()).isEqualTo("superServer");
+
+        assertThat(metrics.getData().get(1).getKey()).isEqualTo("jmxzabbix.check");
+        assertThat(metrics.getData().get(1).getValue()).isEqualTo(0);
+        assertThat(metrics.getData().get(1).getHost()).isEqualTo("superServer");
+    }
+
+    @Test
+    public void should_return_check_status_2_when_cannot_access_jmx() throws Exception {
+        new CassandraEmbedded().start();
+        JmxConfig config = new JmxConfig();
+        config.setUrl("service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi");
+
+        ZabbixRequest metrics = new JmxMetrics(config, "superServer").getMetrics();
+
+        assertThat(metrics.getData()).hasSize(2);
+        assertThat(metrics.getData().get(1).getKey()).isEqualTo("jmxzabbix.check");
+        assertThat(metrics.getData().get(1).getValue()).isEqualTo(2);
+        assertThat(metrics.getData().get(1).getHost()).isEqualTo("superServer");
+    }
+
+    @Test
     public void should_find_metrics_in_jmx() throws Exception {
         new CassandraEmbedded().start();
         JmxConfig config = new JmxConfig();
@@ -48,13 +82,12 @@ public class JmxMetricsTest {
         config.getValuesCaptured().put("com.yammer.metrics.reporting.JmxReporter$Meter", asList("Count", "MeanRate", "OneMinuteRate"));
         config.getMetrics().put("drop", "org.apache.cassandra.metrics:type=DroppedMessage,scope=BINARY,name=Dropped");
 
-        JmxMetrics jmxMetrics = new JmxMetrics(config, "superServer");
-        ZabbixRequest metrics = jmxMetrics.getMetrics();
+        ZabbixRequest metrics = new JmxMetrics(config, "superServer").getMetrics();
 
-        assertThat(metrics.getData()).hasSize(3);
-        assertThat(metrics.getData().get(0).getKey()).isEqualTo("drop[Count]");
-        assertThat(metrics.getData().get(0).getValue()).isEqualTo(0L);
-        assertThat(metrics.getData().get(0).getHost()).isEqualTo("superServer");
+        assertThat(metrics.getData()).hasSize(5);
+        assertThat(metrics.getData().get(1).getKey()).isEqualTo("drop[Count]");
+        assertThat(metrics.getData().get(1).getValue()).isEqualTo(0L);
+        assertThat(metrics.getData().get(1).getHost()).isEqualTo("superServer");
     }
 
     @Test
@@ -67,13 +100,12 @@ public class JmxMetricsTest {
         config.getValuesCaptured().put("sun.management.MemoryImpl", asList("HeapMemoryUsage.max", "NonHeapMemoryUsage.used"));
         config.getMetrics().put("mem", "java.lang:type=Memory");
 
-        JmxMetrics jmxMetrics = new JmxMetrics(config, "superServer");
-        ZabbixRequest metrics = jmxMetrics.getMetrics();
+        ZabbixRequest metrics = new JmxMetrics(config, "superServer").getMetrics();
 
-        assertThat(metrics.getData()).hasSize(2);
-        assertThat(metrics.getData().get(0).getKey()).isEqualTo("mem[HeapMemoryUsage.max]");
-        assertThat((long) metrics.getData().get(0).getValue()).isGreaterThan(10000);
-        assertThat(metrics.getData().get(0).getHost()).isEqualTo("superServer");
+        assertThat(metrics.getData()).hasSize(4);
+        assertThat(metrics.getData().get(1).getKey()).isEqualTo("mem[HeapMemoryUsage.max]");
+        assertThat((long) metrics.getData().get(1).getValue()).isGreaterThan(10000);
+        assertThat(metrics.getData().get(1).getHost()).isEqualTo("superServer");
     }
 
 }

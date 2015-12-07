@@ -24,13 +24,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ZabbixRequest {
 
     private String request = "sender data";
 
-    private List<ZabbixItem> data = new ArrayList<>();
-    private Date clock = new Date();
+    private final List<ZabbixItem> data = new ArrayList<>();
+    private final Date clock = new Date();
     private Long ns;
+
+    public ZabbixRequest(String jmxZabbixVersion, String serverName) {
+        data.add(new ZabbixItem<>(JmxZabbix.JMXZABBIX_VERSION_KEY, jmxZabbixVersion, serverName));
+    }
 
     @Data
     @NoArgsConstructor
