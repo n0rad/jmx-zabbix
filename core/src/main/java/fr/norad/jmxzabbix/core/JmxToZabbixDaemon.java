@@ -20,6 +20,7 @@ package fr.norad.jmxzabbix.core;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import com.google.common.collect.EvictingQueue;
 import lombok.Data;
+import fr.norad.jmxzabbix.core.ZabbixRequest.ZabbixItem;
 
 @Data
 public class JmxToZabbixDaemon implements Runnable {
@@ -48,6 +49,9 @@ public class JmxToZabbixDaemon implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace(System.err);
             }
+            ZabbixRequest zbxVersion = new ZabbixRequest();
+            zbxVersion.getData().add(new ZabbixItem<>("jmx_zabbix.version", "0.0.9", config.getServerName()));
+            queue.add(zbxVersion);
         }
 
     }
