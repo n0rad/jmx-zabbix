@@ -17,11 +17,15 @@
 package fr.norad.jmxzabbix.cli;
 
 import java.io.File;
-import fr.norad.jmxzabbix.core.JmxZabbixConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import fr.norad.jmxzabbix.core.ConfigLoader;
 import fr.norad.jmxzabbix.core.JmxToZabbixDaemon;
+import fr.norad.jmxzabbix.core.JmxZabbixConfig;
 
 public class Main {
+
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         try {
@@ -31,7 +35,7 @@ public class Main {
             JmxZabbixConfig config = ConfigLoader.loadConfig(new File(args[0]));
             new Thread(new JmxToZabbixDaemon(config)).start();
         } catch (Exception e) {
-              e.printStackTrace(System.err);
+            log.error("Daemon start error", e);
             System.exit(1);
         }
     }

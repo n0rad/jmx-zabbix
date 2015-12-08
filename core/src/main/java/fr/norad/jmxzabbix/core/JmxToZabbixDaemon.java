@@ -18,11 +18,15 @@ package fr.norad.jmxzabbix.core;
 
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.google.common.collect.EvictingQueue;
 import lombok.Data;
 
 @Data
 public class JmxToZabbixDaemon implements Runnable {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final JmxZabbixConfig config;
     private boolean interruptFlag = false;
@@ -40,13 +44,10 @@ public class JmxToZabbixDaemon implements Runnable {
                 if (isNullOrEmpty(config.getZabbix().getHost())) {
                     continue;
                 }
-                ZabbixRequest metrics = new JmxMetrics(config.getJmx(), config.getServerName()).getMetrics();
-                if (metrics != null) {
-                    queue.add(metrics);
-                }
+                queue.add(new JmxMetrics(config.getJmx(), config.getServerName()).getMetrics());
                 new ZabbixClient(config.getZabbix()).send(queue);
             } catch (Exception e) {
-                e.printStackTrace(System.err);
+                log.error("Daemon run error", e);
             }
         }
 
