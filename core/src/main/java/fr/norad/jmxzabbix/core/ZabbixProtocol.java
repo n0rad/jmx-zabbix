@@ -17,12 +17,13 @@
 package fr.norad.jmxzabbix.core;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * it's thread safe
@@ -48,19 +49,24 @@ public class ZabbixProtocol {
     public static byte[] read(InputStream in) throws IOException {
         LOGGER.debug("Try to read bytes");
         DataInputStream din = new DataInputStream(in);
-        byte[] headerBuffer = new byte[13];
-        din.readFully(headerBuffer);
 
-        if (headerBuffer[0] != 'Z' || headerBuffer[1] != 'B' || headerBuffer[2] != 'X' || headerBuffer[3] != 'D' || headerBuffer[4] != '\1'
-                || headerBuffer[9] != '\0' || headerBuffer[10] != '\0' || headerBuffer[11] != '\0' || headerBuffer[12] != '\0') {
+        byte[] headerBuffer = new byte[5];
+        din.readFully(headerBuffer);
+        if (headerBuffer[0] != 'Z' || headerBuffer[1] != 'B' || headerBuffer[2] != 'X' || headerBuffer[3] != 'D' || headerBuffer[4] != '\1') {
             throw new IllegalStateException("Wrong header received");
         }
 
+        byte[] sizeBuffer = new byte[8];
+        din.readFully(sizeBuffer);
+        if (sizeBuffer[4] != '\0' || sizeBuffer[5] != '\0' || sizeBuffer[6] != '\0' || sizeBuffer[7] != '\0') {
+            LOGGER.warn("Wrong header - data separator received");
+        }
+
         int dataLength = 0;
-        dataLength |= headerBuffer[5] & 0xFF;
-        dataLength |= (headerBuffer[6] & 0xFF) << 8;
-        dataLength |= (headerBuffer[7] & 0xFF) << 16;
-        dataLength |= (headerBuffer[8] & 0xFF) << 24;
+        dataLength |= sizeBuffer[0] & 0xFF;
+        dataLength |= (sizeBuffer[1] & 0xFF) << 8;
+        dataLength |= (sizeBuffer[2] & 0xFF) << 16;
+        dataLength |= (sizeBuffer[3] & 0xFF) << 24;
 
         if (dataLength > 128_000_000) {
             throw new IllegalStateException("Zabbix buffer does not support > 128 Mb. Something is wrong");
