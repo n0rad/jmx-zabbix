@@ -17,11 +17,12 @@
 package fr.norad.jmxzabbix.core;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -43,7 +44,7 @@ public class ZabbixRequest {
         private String host;
         private String key;
         private T value;
-        private Date clock;
+        private Date clock = new Date();
         private Long ns;
 
         public ZabbixItem(String key, T value, String host) {
