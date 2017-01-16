@@ -44,13 +44,14 @@ public class ZabbixRequest {
         private String host;
         private String key;
         private T value;
-        private Date clock = new Date();
+        private Integer clock;
         private Long ns;
 
         public ZabbixItem(String key, T value, String host) {
             this.key = key;
             this.value = value;
             this.host = host;
+            clock = (int) (System.currentTimeMillis() / 1000);
         }
 
     }
