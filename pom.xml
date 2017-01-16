@@ -6,7 +6,7 @@
     <packaging>pom</packaging>
     <name>Jmx Zabbix</name>
     <description>Jmx to Zabbix</description>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5</version>
 
     <parent>
         <groupId>fr.norad.parent</groupId>
@@ -18,7 +18,7 @@
         <connection>scm:git:git://github.com/n0rad/jmx-zabbix.git</connection>
         <developerConnection>scm:git:git@github.com:n0rad/jmx-zabbix.git</developerConnection>
         <url>https://github.com/n0rad/jmx-zabbix</url>
-        <tag>HEAD</tag>
+        <tag>jmxzabbix-0.5</tag>
     </scm>
 
     <modules>
