@@ -21,7 +21,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -31,7 +30,7 @@ public class ZabbixRequest {
     private String request = "sender data";
 
     private final List<ZabbixItem> data = new ArrayList<>();
-    private final Date clock = new Date();
+    private final Integer clock = (int) (System.currentTimeMillis() / 1000);
     private Long ns;
 
     public ZabbixRequest(String jmxZabbixVersion, String serverName) {
