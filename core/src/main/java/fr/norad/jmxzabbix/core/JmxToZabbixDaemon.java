@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.common.collect.EvictingQueue;
 import lombok.Data;
+import fr.norad.jmxzabbix.core.ZabbixRequest.ZabbixItem;
 
 @Data
 public class JmxToZabbixDaemon implements Runnable {
@@ -49,6 +50,9 @@ public class JmxToZabbixDaemon implements Runnable {
             } catch (Exception e) {
                 log.error("Daemon run error", e);
             }
+            ZabbixRequest zbxVersion = new ZabbixRequest();
+            zbxVersion.getData().add(new ZabbixItem<>("jmx_zabbix.version", "0.0.9", config.getServerName()));
+            queue.add(zbxVersion);
         }
 
     }
